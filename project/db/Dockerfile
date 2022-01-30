@@ -1,5 +1,5 @@
 # Pull official base image
-FROM postgres:13-alpine
+FROM postgres:14-alpine
 
 # Run create.sql on init
 # Here, we extend the official Postgres image by //

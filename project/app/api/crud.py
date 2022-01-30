@@ -14,7 +14,7 @@ async def post(payload: SummaryPayloadSchema) -> int:
 async def get(id: int) -> Optional[dict]:
     summary = await TextSummary.filter(id = id).first().values()
     if summary:
-        return summary[0]
+        return summary
     return None
 
 async def get_all() -> List:
