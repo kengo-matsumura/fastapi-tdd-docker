@@ -1,29 +1,30 @@
-# Pull official base image
+# pull official base image
 FROM python:3.10.1-slim-buster
 
-# Set working directory
+# set working directory
 WORKDIR /usr/src/app
 
-# Set environment variables
+# set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Install system dependencies
+# install system dependencies
 RUN apt-get update \
-    && apt-get -y install netcat gcc \
-    && apt-get clean
+  && apt-get -y install netcat gcc postgresql \
+  && apt-get clean
 
-# Install python dependencies
+# install python dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./requirements-dev.txt .
+RUN pip install -r requirements-dev.txt
 
-# Add app
+# add app
 COPY . .
 
-# Add entrypoint.sh
+# add entrypoint.sh
 COPY ./entrypoint.sh .
 RUN chmod +x /usr/src/app/entrypoint.sh
 
-# Run entrypoint.sh
+# run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
